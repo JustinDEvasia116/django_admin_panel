@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css_files %}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="{% static 'adminhome.css' %}">
+
+{% endblock css_files %}
+
+{% block content %}
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <!-- Container wrapper -->
+    <div class="container">
+      <!-- Navbar brand -->
+      <a class="navbar-brand" href="#"><img id="MDB-logo"
+          src="https://thumbs.dreamstime.com/b/admin-logo-icon-administrator-illustration-man-jacket-shirt-ties-jacket-shirt-47963876.jpg" alt="MDB Logo"
+          draggable="false" height="30" /></a>
+  
+      <!-- Toggle button -->
+      <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+        data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+  
+      <!-- Collapsible wrapper -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- Left links -->
+        <ul class="navbar-nav me-3">
+          <li class="nav-item">
+             <span class="nav-link active d-flex align-items-center" aria-current="page" href="#"><span
+                class="fas fa-bars pe-2"></span>ADMIN </span>
+          </li>
+        </ul>
+        <!-- Left links -->
+  
+        <form class="d-flex align-items-center w-50 form-search" action="home" method='post' >
+          {% csrf_token %}
+          <input type="search" name ="search" class="form-control" placeholder="Search" aria-label="Search" />
+          <button class="btn btn-outline-success" type="submit">Search</button>
+          
+        </form>
+  
+        <ul class="navbar-nav ml-5 icons">
+          <li class="nav-item ">
+            <a class="nav-link d-flex align-items-center" href="adduser">Add User</a>
+          </li>
+       
+          <li class=" ml-5 nav-item " >
+            <a class=" signout nav-link d-flex align-items-center" style="color: red;" href="adminout">Sign Out</a>
+          </li>
+        </ul>
+      </div>
+      <!-- Collapsible wrapper -->
+    </div>
+    <!-- Container wrapper -->
+  </nav>
+  <!-- Navbar -->
+
+
+
+  
+
+  <div class="container mt-4">
+    <div class="center">
+      {%for message in messages%}
+        <h5 class="text-danger">{{message}}</h5>
+      {% endfor %}
+    </div>
+    
+     
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Username</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users%}
+          <tr>
+            <td>{{user.id}}</td>
+            <td>{{user.first_name}} {{user.last_name}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.username}}</td>
+            <td><a class="btn btn-primary" href="edituser?id={{user.id}}">Edit</a></td>
+            <td><a class="btn btn-danger" href="deleteuser?id={{user.id}}">Delete</a></td>
+            
+          </tr>
+          {%endfor%}
+        </tbody>
+      </table>
+
+</div>
+  
+{% endblock content %}
